@@ -1,0 +1,34 @@
+- name: Install IM dependencies for Debian
+  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev update_cache=yes cache_valid_time=3600
+  when: ansible_os_family == "Debian"
+
+- name: Install IM dependencies for CentOS
+  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel
+  when: ansible_os_family == "RedHat"
+
+- name: Remove python-crypto pkg in CentOS to avoid future issues
+  command: rpm -e python-crypto --nodeps
+  when: ansible_os_family == "RedHat"
+  ignore_errors: yes
+
+- name: Install last version of setuptools with Pip
+  pip: name=setuptools extra_args="-I" state=latest
+
+- name: Install backports.ssl_match_hostname
+  pip: name=backports.ssl_match_hostname state=latest
+
+# Install IM using pip
+- name: Pip install IM
+  pip: name=IM
+
+- name: Set im script access rights
+  file: path=/etc/init.d/im mode=0755
+  notify: start im
+
+- name: Set specific configuration in case of CentOS 6
+  ini_file: dest=/etc/im/im.cfg section=im option=MAX_SIMULTANEOUS_LAUNCHES value=1
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int <= 6
+
+- name: Open port 8899
+  iptables: chain=INPUT jump=ACCEPT protocol=tcp destination_port=8899
+  ignore_errors: yes
