@@ -4,7 +4,7 @@
 IM Role
 =======================
 
-This ansible role installs the [IM](http://www.grycap.upv.es/im/index.php) software.
+This ansible role installs the [IM](http://www.grycap.upv.es/im/index.php) software.  
 The github repository of the IM is [here](https://github.com/grycap/im).
 
 Example Playbook
