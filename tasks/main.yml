@@ -23,7 +23,9 @@
 
 - name: Set im script access rights
   file: path=/etc/init.d/im mode=0755
-  notify: start im
+
+- name: Start im service
+  service: name=im state=started
 
 - name: Set specific configuration in case of CentOS 6
   ini_file: dest=/etc/im/im.cfg section=im option=MAX_SIMULTANEOUS_LAUNCHES value=1

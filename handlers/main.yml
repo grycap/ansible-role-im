@@ -1,4 +1,0 @@
----
-# handler for the im daemon
-- name: start im
-  service: name=im state=started
