@@ -3,7 +3,7 @@
   when: ansible_os_family == "Debian"
 
 - name: Install IM dependencies for CentOS
-  yum: name=epel-release update_cache=yes cache_valid_time=3600
+  yum: name=epel-release update_cache=yes
   when: ansible_os_family == "RedHat"
 
 - name: Install IM dependencies for CentOS
