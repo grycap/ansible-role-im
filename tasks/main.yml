@@ -1,9 +1,13 @@
 - name: Install IM dependencies for Debian
-  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev update_cache=yes cache_valid_time=3600
+  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev,python-pip update_cache=yes cache_valid_time=3600
   when: ansible_os_family == "Debian"
 
 - name: Install IM dependencies for CentOS
-  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel
+  yum: name=epel-release
+  when: ansible_os_family == "RedHat"
+
+- name: Install IM dependencies for CentOS
+  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip update_cache=yes
   when: ansible_os_family == "RedHat"
 
 - name: Remove python-crypto pkg in CentOS to avoid future issues
@@ -23,7 +27,9 @@
 
 - name: Set im script access rights
   file: path=/etc/init.d/im mode=0755
-  notify: start im
+
+- name: Start im service
+  service: name=im state=started
 
 - name: Set specific configuration in case of CentOS 6
   ini_file: dest=/etc/im/im.cfg section=im option=MAX_SIMULTANEOUS_LAUNCHES value=1
