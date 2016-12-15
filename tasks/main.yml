@@ -1,5 +1,5 @@
 - name: Install IM dependencies for Debian
-  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev,python-pip update_cache=yes cache_valid_time=3600
+  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev,python-pip,python-mysqldb,python-pysqlite2 update_cache=yes cache_valid_time=3600
   when: ansible_os_family == "Debian"
 
 - name: Install IM dependencies for CentOS
@@ -7,7 +7,7 @@
   when: ansible_os_family == "RedHat"
 
 - name: Install IM dependencies for CentOS
-  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip update_cache=yes
+  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip,MySQL-python,python-sqlite3dbm update_cache=yes
   when: ansible_os_family == "RedHat"
 
 - name: Remove python-crypto pkg in CentOS to avoid future issues
