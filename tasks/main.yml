@@ -36,8 +36,12 @@
   shell: pgrep im | xargs kill && service im restart
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
 
-- name: Set specific configuration in case of CentOS 6
-  ini_file: dest=/etc/im/im.cfg section=im option=MAX_SIMULTANEOUS_LAUNCHES value=1
+- block:
+  - name: Set specific configuration in case of CentOS 6
+    ini_file: dest=/etc/im/im.cfg section=im option=MAX_SIMULTANEOUS_LAUNCHES value=1
+
+  - name: Restart IM service
+    service: name=im state=restarted
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int <= 6
 
 - name: Open port 8899
