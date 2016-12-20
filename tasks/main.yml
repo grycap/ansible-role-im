@@ -41,8 +41,8 @@
     ini_file: dest=/etc/im/im.cfg section=im option=MAX_SIMULTANEOUS_LAUNCHES value=1
 
   - name: Restart IM service
-    service: name=im state=restarted
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int <= 6
+    command: service im restart
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 6
 
 - name: Open port 8899
   iptables: chain=INPUT jump=ACCEPT protocol=tcp destination_port=8899
