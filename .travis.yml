@@ -12,7 +12,7 @@ env:
   - distro: centos7
 #    init: /usr/lib/systemd/systemd
     init: /bin/bash
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro -t"
   - distro: centos6
     init: /sbin/init
     run_opts: ""
