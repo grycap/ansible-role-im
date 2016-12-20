@@ -17,4 +17,3 @@ galaxy_info:
     - im
 
 dependencies: []
- - { role: 'grycap.docker', when: im_install_type == 'docker' }
