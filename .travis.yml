@@ -12,7 +12,7 @@ env:
   - distro: centos7
 #    init: /usr/lib/systemd/systemd
     init: /bin/bash
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro -t"
+    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
   - distro: centos6
     init: /sbin/init
     run_opts: ""
@@ -30,7 +30,7 @@ before_install:
 script:
   - container_id=$(mktemp)
   # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} grycap/travis:${distro} "${init}" > "${container_id}"'
+  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} -t grycap/travis:${distro} "${init}" > "${container_id}"'
 
   # Ansible syntax check.
   - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
