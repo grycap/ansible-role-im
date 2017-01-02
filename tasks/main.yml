@@ -32,6 +32,17 @@
 # Install IM using pip
 - name: Pip install IM
   pip: name=IM
+  when: im_version == "latest"
+
+# Install IM using pip but specific version
+- name: Pip install IM
+  pip: name=IM version={{ im_version }}
+  when: im_version != "latest" and im_version != "devel"
+
+# Install IM getting devel branch from git
+- name: Install IM devel Version
+  import: devel.yml
+  when: im_version == "devel"
 
 - name: Set im script access rights
   file: path=/etc/init.d/im mode=0755
