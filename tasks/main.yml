@@ -41,7 +41,7 @@
 
 # Install IM getting devel branch from git
 - name: Install IM devel Version
-  import: devel.yml
+  include: devel.yml
   when: im_version == "devel"
 
 - name: Set im script access rights
