@@ -27,7 +27,7 @@
   pip: name=setuptools extra_args="-I" state=latest
 
 - name: Install backports.ssl_match_hostname
-  pip: name=backports.ssl_match_hostname state=latest
+  pip: name=backports.ssl_match_hostname state=latest executable=pip
 
 # Install IM using pip
 - name: Pip install IM
