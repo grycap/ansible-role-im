@@ -1,7 +1,12 @@
-- name: Check if im service is running
-  service: name=im state=started
-  register: im_service_running
-  ignore_errors: yes
+# Add a fast check to speed reconfiguration
+- set_fact: IM_PATH=/usr/local/bin/im_service.py
+  when: ansible_os_family == "Debian"
+
+- set_fact: IM_PATH=/usr/bin/im_service.py
+  when: ansible_os_family == "RedHat"
+
+- stat: path={{IM_PATH}}
+  register: im_installed
 
 - block:
   - name: Include "{{ansible_os_family}}" tasks
@@ -50,4 +55,4 @@
     iptables: chain=INPUT jump=ACCEPT protocol=tcp destination_port=8899
     ignore_errors: yes
 
-when: im_service_running|failed
+  when: not im_installed.stat.exists
