@@ -1,0 +1,17 @@
+- name: Install IM dependencies for CentOS
+  yum: name=epel-release
+
+- name: Install IM dependencies for CentOS
+  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip,sqlite-devel update_cache=yes
+
+- name: Install IM dependencies for CentOS 7
+  yum: name=python-sqlite3dbm
+  when: ansible_distribution_major_version|int >= 7
+
+- name: Install IM dependencies for CentOS 6
+  yum: name=python-sqlite2
+  when: ansible_distribution_major_version|int <= 6
+
+- name: Remove python-crypto pkg in CentOS to avoid future issues
+  command: rpm -e python-crypto --nodeps
+  ignore_errors: yes
