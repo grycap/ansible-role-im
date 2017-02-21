@@ -1,67 +1,53 @@
-- name: Install IM dependencies for Debian
-  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev,python-pip,libsqlite3-dev update_cache=yes cache_valid_time=3600
-  when: ansible_os_family == "Debian"
-
-- name: Install IM dependencies for CentOS
-  yum: name=epel-release
-  when: ansible_os_family == "RedHat"
-
-- name: Install IM dependencies for CentOS
-  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip,sqlite-devel update_cache=yes
-  when: ansible_os_family == "RedHat"
-  
-- name: Install IM dependencies for CentOS 7
-  yum: name=python-sqlite3dbm
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
-
-- name: Install IM dependencies for CentOS 6
-  yum: name=python-sqlite2
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int <= 6
-
-- name: Remove python-crypto pkg in CentOS to avoid future issues
-  command: rpm -e python-crypto --nodeps
-  when: ansible_os_family == "RedHat"
-  ignore_errors: yes
-
-- name: Install last version of setuptools with Pip
-  pip: name=setuptools extra_args="-I" state=latest
-
-- name: Install backports.ssl_match_hostname
-  pip: name=backports.ssl_match_hostname state=latest executable=pip
-
-# Install IM using pip
-- name: Pip install IM
-  pip: name=IM executable=pip
-  when: im_version == "latest"
-
-# Install IM using pip but specific version
-- name: Pip install IM
-  pip: name=IM version={{ im_version }} executable=pip
-  when: im_version != "latest" and im_version != "devel"
-
-# Install IM getting devel branch from git
-- name: Install IM devel Version
-  include: devel.yml
-  when: im_version == "devel"
-
-- name: Disable IM REST API
-  ini_file: dest=/etc/im/im.cfg section=im option=ACTIVATE_REST value=False
-
-- name: Set specific configuration in case of CentOS 6
-  ini_file: dest=/etc/im/im.cfg section=im option=MAX_SIMULTANEOUS_LAUNCHES value=1
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 6
-
-- name: Set im script access rights
-  file: path=/etc/init.d/im mode=0755
-
-- name: Start im service
+- name: Check if im service is running
   service: name=im state=started
-
-  # This fixes a problem with the IM service in Centos 7
-- name: Kill and restart im service (Centos 7 only)
-  shell: pgrep im | xargs kill && service im restart
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
-
-- name: Open port 8899
-  iptables: chain=INPUT jump=ACCEPT protocol=tcp destination_port=8899
+  register: im_service_running
   ignore_errors: yes
+
+- block:
+  - name: Include "{{ansible_os_family}}" tasks
+    include: "{{ansible_os_family}}.yml"
+
+  - name: Install last version of setuptools with Pip
+    pip: name=setuptools extra_args="-I" state=latest
+
+  - name: Install backports.ssl_match_hostname
+    pip: name=backports.ssl_match_hostname state=latest executable=pip
+
+  # Install IM using pip
+  - name: Pip install IM
+    pip: name=IM executable=pip
+    when: im_version == "latest"
+
+  # Install IM using pip but specific version
+  - name: Pip install IM
+    pip: name=IM version={{ im_version }} executable=pip
+    when: im_version != "latest" and im_version != "devel"
+
+  # Install IM getting devel branch from git
+  - name: Install IM devel Version
+    include: devel.yml
+    when: im_version == "devel"
+
+  - name: Disable IM REST API
+    ini_file: dest=/etc/im/im.cfg section=im option=ACTIVATE_REST value=False
+
+  - name: Set specific configuration in case of CentOS 6
+    ini_file: dest=/etc/im/im.cfg section=im option=MAX_SIMULTANEOUS_LAUNCHES value=1
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 6
+
+  - name: Set im script access rights
+    file: path=/etc/init.d/im mode=0755
+
+  - name: Start im service
+    service: name=im state=started
+
+    # This fixes a problem with the IM service in Centos 7
+  - name: Kill and restart im service (Centos 7 only)
+    shell: pgrep im | xargs kill && service im restart
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
+
+  - name: Open port 8899
+    iptables: chain=INPUT jump=ACCEPT protocol=tcp destination_port=8899
+    ignore_errors: yes
+
+when: im_service_running|failed
