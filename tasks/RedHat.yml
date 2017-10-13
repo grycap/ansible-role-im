@@ -2,7 +2,7 @@
   yum: name=epel-release
 
 - name: Install IM dependencies for CentOS
-  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip,sqlite-devel update_cache=yes
+  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip,sqlite-devel,python-enum update_cache=yes
 
 - name: Install IM dependencies for CentOS 7
   yum: name=python-sqlite3dbm
