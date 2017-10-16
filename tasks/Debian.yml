@@ -1,2 +1,2 @@
 - name: Install IM dependencies for Debian
-  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev,python-pip,libsqlite3-dev,python-enum update_cache=yes cache_valid_time=3600
+  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev,python-pip,libsqlite3-dev,python-enum34 update_cache=yes cache_valid_time=3600
