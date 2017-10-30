@@ -18,6 +18,9 @@
 
   - name: Install backports.ssl_match_hostname
     pip: name=backports.ssl_match_hostname state=latest executable=pip
+    
+  - name: Install xmltodict
+    pip: name=xmltodict state=latest executable=pip
 
   # Install IM using pip
   - name: Pip install IM
