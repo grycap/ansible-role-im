@@ -37,6 +37,15 @@
     include: devel.yml
     when: im_version == "devel"
 
+  # Use system package python-requests instead of pip version
+  - pip: state=absent name=requests executable=pip
+    name: Debian remove pip requests
+    when: ansible_os_family == "Debian"
+
+  - apt: name=python-requests
+    name: Debian Install python-requests
+    when: ansible_os_family == "Debian"
+
   - name: Disable IM REST API
     ini_file: dest=/etc/im/im.cfg section=im option=ACTIVATE_REST value=False
 
