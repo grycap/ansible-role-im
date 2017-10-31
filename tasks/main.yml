@@ -32,6 +32,13 @@
     pip: name=IM version={{ im_version }} executable=pip
     when: im_version != "latest" and im_version != "devel"
 
+  # Use system package python-requests instead of pip version
+  - pip: state=absent name=requests
+    when: ansible_os_family == "Debian"
+
+  - apt: name=python-requests
+    when: ansible_os_family == "Debian"
+
   # Install IM getting devel branch from git
   - name: Install IM devel Version
     include: devel.yml
