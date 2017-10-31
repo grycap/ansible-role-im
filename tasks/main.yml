@@ -33,7 +33,7 @@
     when: im_version != "latest" and im_version != "devel"
 
   # Use system package python-requests instead of pip version
-  - pip: state=absent name=requests
+  - pip: state=absent name=requests executable=pip
     when: ansible_os_family == "Debian"
 
   - apt: name=python-requests
