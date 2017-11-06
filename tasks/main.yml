@@ -57,7 +57,7 @@
     file: path=/etc/init.d/im mode=0755
 
   - name: Start im service
-    service: name=im state=started
+    service: name=im state=started enabled=yes
 
     # This fixes a problem with the IM service in Centos 7
   - name: Kill and restart im service (Centos 7 only)
