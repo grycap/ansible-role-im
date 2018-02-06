@@ -4,3 +4,7 @@
 - name: Install ipaddress in Ubuntu 14
   pip: name=ipaddress
   when: ansible_distribution_major_version == "14"
+
+- name: Install last version of setuptools with Pip
+  pip: name=setuptools extra_args="-I" state=latest
+  when: ansible_distribution_major_version == "14"

@@ -9,13 +9,14 @@
   when: ansible_distribution_major_version|int >= 7
 
 - name: Install IM dependencies for CentOS 6
-  pip: name=pysqlite version=2.7.0
+  yum: name=python-jinja2
   when: ansible_distribution_major_version == "6"
 
 - name: Install IM dependencies for CentOS 6
-  pip: name=paramiko version=2.3.1
+  pip: name="{{ item.name }}" version="{{ item.version }}"
   when: ansible_distribution_major_version == "6"
-
-- name: Install IM dependencies for CentOS 6
-  pip: name=cheroot version=5.11.0
-  when: ansible_distribution_major_version == "6"
+  with_items:
+   - { name: 'pysqlite', version: '2.7.0' }
+   - { name: 'cffi', version: 'latest' }
+   - { name: 'paramiko', version: '2.3.1' }
+   - { name: 'cheroot', version: '5.11.0' }
