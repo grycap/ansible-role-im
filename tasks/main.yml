@@ -12,10 +12,6 @@
   - name: Include "{{ansible_os_family}}" tasks
     include: "{{ansible_os_family}}.yml"
 
-  - name: Install last version of setuptools with Pip
-    pip: name=setuptools extra_args="-I" state=latest
-    ignore_errors: yes
-
   - name: Install last version of pyOpenSSL with Pip
     pip: name=pyOpenSSL extra_args="-I" state=latest
     ignore_errors: yes
