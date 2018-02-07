@@ -38,12 +38,12 @@
     name: remove pip requests
     when: (ansible_os_family == "Debian") or (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7)
 
-  - apt: name=python-requests state=latest
+  - apt: name=python-requests state=latest force=yes
     name: Install python-requests
     when: ansible_os_family == "Debian"
 
-  - yum: name=python-requests state=latest
-    name: Install python-requests
+  - name: Install python-requests
+    command: yum reinstall -y python-requests python-urllib3
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
 
   - name: Disable IM REST API
