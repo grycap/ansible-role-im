@@ -42,7 +42,7 @@
     name: Install python-requests
     when: ansible_os_family == "Debian"
 
-  - yum: name=python-requests state=latest
+  - yum: name=python-requests,python-urllib3 state=latest
     name: Install python-requests
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
 
