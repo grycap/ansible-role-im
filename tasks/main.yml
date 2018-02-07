@@ -34,13 +34,17 @@
     when: im_version == "devel"
 
   # Use system package python-requests instead of pip version
-  - pip: state=absent name=requests executable=pip
-    name: Debian remove pip requests
+  - pip: state=absent name=requests,urllib3 executable=pip
+    name: remove pip requests
+    when: (ansible_os_family == "Debian") or (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7)
+
+  - apt: name=python-requests state=latest
+    name: Install python-requests
     when: ansible_os_family == "Debian"
 
-  - apt: name=python-requests
-    name: Debian Install python-requests
-    when: ansible_os_family == "Debian"
+  - yum: name=python-requests state=latest
+    name: Install python-requests
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
 
   - name: Disable IM REST API
     ini_file: dest=/etc/im/im.cfg section=im option=ACTIVATE_REST value=False
