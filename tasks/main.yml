@@ -36,9 +36,15 @@
   # Use system package python-requests instead of pip version
   - pip: state=absent name=requests executable=pip
     name: remove pip requests
+    when: (ansible_os_family == "Debian") or (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7)
 
-  - package: name=python-requests state=latest
+  - apt: name=python-requests state=latest
     name: Install python-requests
+    when: ansible_os_family == "Debian"
+
+  - yum: name=python-requests state=latest
+    name: Install python-requests
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
 
   - name: Disable IM REST API
     ini_file: dest=/etc/im/im.cfg section=im option=ACTIVATE_REST value=False
