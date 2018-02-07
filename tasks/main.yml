@@ -37,7 +37,7 @@
   - pip: state=absent name=requests executable=pip
     name: remove pip requests
 
-  - package: name=python-requests state= latest
+  - package: name=python-requests state=latest
     name: Install python-requests
 
   - name: Disable IM REST API
