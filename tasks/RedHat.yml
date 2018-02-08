@@ -4,8 +4,12 @@
 - name: Install IM dependencies for CentOS
   yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip,sqlite-devel,python-virtualenv,libyaml-devel,make update_cache=yes
 
+- name: Install IM dependencies for CentOS 6
+  yum: name=python-jinja2
+  when: ansible_distribution_major_version == "6"
+
 - name: Install IM dependencies for CentOS
-  pip: name=enum34,jinja2,sqlite3dbm state=latest virtualenv={{im_virtual_env}}
+  pip: name=enum34,sqlite3dbm state=latest virtualenv={{im_virtual_env}}
 
 - name: Install IM dependencies for CentOS 6
   pip: name=cffi state=latest virtualenv={{im_virtual_env}}
