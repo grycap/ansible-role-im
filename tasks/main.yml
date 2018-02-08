@@ -6,7 +6,7 @@
 
 - iptables:
     chain: INPUT
-    protocol: "{{item}}"
+    protocol: tcp
     destination_port: "{{item}}"
     jump: ACCEPT
   with_items:
