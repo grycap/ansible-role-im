@@ -15,7 +15,7 @@
   ignore_errors: yes
 
 - firewalld:
-    port: "{{item}}"
+    port: "{{item}}/tcp"
     permanent: true
     state: enabled
     immediate: true
