@@ -4,6 +4,9 @@
 - name: Create /var/log/im dir
   file: path=/var/log/im state=directory
 
+- name: Install dependencies for docker management
+  pip: name=docker-py
+
 - name: Launch im container
   docker:
     name: im
