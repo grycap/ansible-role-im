@@ -1,0 +1,24 @@
+- name: Create /etc/im dir
+  file: path=/etc/im state=directory
+
+- name: Create /var/log/im dir
+  file: path=/var/log/im state=directory
+
+- name: Launch im container
+  docker:
+    name: im
+    image: "grycap/im:{{im_version}}"
+    state: started
+    ports:
+    - "8800:8800"
+    - "8899:8899"
+    expose:
+    - 8899
+    - 8800
+    volumes:
+    - "/etc/im:/etc/im"
+    - "/var/log/im:/var/log/im"
+
+- name: Open port 8899
+  iptables: chain=INPUT jump=ACCEPT protocol=tcp destination_port=8899
+  ignore_errors: yes
