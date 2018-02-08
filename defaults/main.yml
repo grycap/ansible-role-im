@@ -1,4 +1,4 @@
 # IM version to install: latest, devel, 1.4.8, ...
 im_version: latest
 # Use docker to launch IM
-im_use_docker: True
+im_use_docker: False
