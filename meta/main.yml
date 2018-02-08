@@ -16,4 +16,6 @@ galaxy_info:
   galaxy_tags:
     - im
 
-dependencies: []
+dependencies:
+  - role: grycap.docker
+    when: im_use_docker
