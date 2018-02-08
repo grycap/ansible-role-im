@@ -23,3 +23,4 @@
     - 8899
     - 8800
   when: ansible_os_family == "RedHat"
+  ignore_errors: yes
