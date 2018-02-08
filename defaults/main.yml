@@ -2,3 +2,6 @@
 im_version: latest
 # Use docker to launch IM
 im_use_docker: False
+# Use docker to launch IM
+#im_virtual_env: /usr/share/im/imenv
+im_virtual_env:
