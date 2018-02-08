@@ -18,7 +18,3 @@
     volumes:
     - "/etc/im:/etc/im"
     - "/var/log/im:/var/log/im"
-
-- name: Open port 8899
-  iptables: chain=INPUT jump=ACCEPT protocol=tcp destination_port=8899
-  ignore_errors: yes

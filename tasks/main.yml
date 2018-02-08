@@ -3,3 +3,24 @@
 
 - include: install.yml
   when: not im_use_docker
+
+- iptables:
+    chain: INPUT
+    protocol: "{{item}}"
+    destination_port: "{{item}}"
+    jump: ACCEPT
+  with_items:
+    - 8899
+    - 8800
+  ignore_errors: yes
+
+- firewalld:
+    port: "{{item}}"
+    permanent: true
+    state: enabled
+    immediate: true
+  with_items:
+    - 8899
+    - 8800
+  when: ansible_os_family == "RedHat"
+  ignore_errors: yes
