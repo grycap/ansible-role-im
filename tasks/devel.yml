@@ -13,5 +13,5 @@
   git: repo=https://github.com/grycap/im.git dest=/opt/tmp/im version=devel
 
 - name: Install IM devel
-  pip: name=/opt/tmp/im
+  pip: name=/opt/tmp/im virtualenv={{im_virtual_env}}
 

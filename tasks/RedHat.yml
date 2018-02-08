@@ -2,22 +2,17 @@
   yum: name=epel-release
 
 - name: Install IM dependencies for CentOS
-  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip,sqlite-devel,python-enum34 update_cache=yes
+  yum: name=gcc,SOAPpy,python-devel,libffi-devel,openssl-devel,python-pip,sqlite-devel,python-virtualenv,libyaml-devel,make update_cache=yes
 
-- name: Install IM dependencies for CentOS 7
-  yum: name=python-sqlite3dbm
-  when: ansible_distribution_major_version|int >= 7
+- name: Install IM dependencies for CentOS
+  pip: name=enum34,jinja2,sqlite3dbm state=latest virtualenv={{im_virtual_env}}
 
 - name: Install IM dependencies for CentOS 6
-  yum: name=python-jinja2
+  pip: name=cffi state=latest virtualenv={{im_virtual_env}}
   when: ansible_distribution_major_version == "6"
 
 - name: Install IM dependencies for CentOS 6
-  pip: name=cffi
-  when: ansible_distribution_major_version == "6"
-
-- name: Install IM dependencies for CentOS 6
-  pip: name="{{ item.name }}" version="{{ item.version }}"
+  pip: name="{{ item.name }}" version="{{ item.version }}" virtualenv={{im_virtual_env}}
   when: ansible_distribution_major_version == "6"
   with_items:
    - { name: 'pysqlite', version: '2.7.0' }

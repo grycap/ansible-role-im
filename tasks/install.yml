@@ -12,43 +12,29 @@
   - name: Include "{{ansible_os_family}}" tasks
     include: "{{ansible_os_family}}.yml"
 
+  - name: Install last version of setuptools with Pip
+    pip: name=setuptools state=latest virtualenv={{im_virtual_env}}
+
   - name: Install backports.ssl_match_hostname
-    pip: name=backports.ssl_match_hostname state=latest executable=pip
+    pip: name=backports.ssl_match_hostname state=latest virtualenv={{im_virtual_env}}
 
   - name: Install xmltodict
-    pip: name=xmltodict state=latest executable=pip
+    pip: name=xmltodict state=latest virtualenv={{im_virtual_env}}
 
   # Install IM using pip
   - name: Pip install IM
-    pip: name=IM executable=pip
+    pip: name=IM state=latest virtualenv={{im_virtual_env}}
     when: im_version == "latest"
 
   # Install IM using pip but specific version
   - name: Pip install IM
-    pip: name=IM version={{ im_version }} executable=pip
+    pip: name=IM version={{ im_version }} virtualenv={{im_virtual_env}}
     when: im_version != "latest" and im_version != "devel"
 
   # Install IM getting devel branch from git
   - name: Install IM devel Version
     include: devel.yml
     when: im_version == "devel"
-
-  # Use system package python-requests instead of pip version
-  - pip: state=absent name=requests,urllib3 executable=pip
-    name: remove pip requests
-    when: (ansible_os_family == "Debian") or (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7)
-
-  - apt: name=python-requests state=latest
-    name: Install python-requests
-    when: ansible_os_family == "Debian"
-
-  - yum: name=python-requests,python-urllib3 state=latest
-    name: Install python-requests
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
-
-  - name: Assure to reinstall python-requests
-    command: yum reinstall -y python-requests python-urllib3
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
 
   - name: Disable IM REST API
     ini_file: dest=/etc/im/im.cfg section=im option=ACTIVATE_REST value=False
@@ -59,6 +45,9 @@
 
   - name: Set im script access rights
     file: path=/etc/init.d/im mode=0755
+
+  - name: Set im_service.py script access rights
+    file: path="{{IM_PATH}}" mode=0755
 
   - name: Start im service
     service: name=im state=started enabled=yes

@@ -1,10 +1,5 @@
 - name: Install IM dependencies for Debian
-  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev,python-pip,libsqlite3-dev,python-enum34 update_cache=yes cache_valid_time=3600
+  apt: name=gcc,python-soappy,python-dev,libffi-dev,libssl-dev,python-pip,libsqlite3-dev,python-virtualenv,libyaml-dev,make update_cache=yes cache_valid_time=3600
 
-- name: Install ipaddress in Ubuntu 14
-  pip: name=ipaddress
-  when: ansible_distribution_major_version == "14"
-
-- name: Install last version of setuptools with Pip
-  pip: name=setuptools extra_args="-I" state=latest
-  when: ansible_distribution_major_version == "14"
+- name: Install IM dependencies for Debian
+  pip: name=ipaddress,enum34 state=latest virtualenv={{im_virtual_env}}
