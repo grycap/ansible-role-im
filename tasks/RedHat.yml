@@ -1,4 +1,4 @@
-- name: Install IM dependencies for CentOS
+- name: Install EPEL repo for CentOS
   yum: name=epel-release
 
 - name: Install IM dependencies for CentOS
