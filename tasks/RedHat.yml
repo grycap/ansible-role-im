@@ -13,6 +13,10 @@
   when: ansible_distribution_major_version == "6"
 
 - name: Install IM dependencies for CentOS 6
+  pip: name=setuptools state=latest
+  when: ansible_distribution_major_version == "6"
+
+- name: Install IM dependencies for CentOS 6
   pip: name=cffi
   when: ansible_distribution_major_version == "6"
 
