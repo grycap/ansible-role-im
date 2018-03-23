@@ -13,9 +13,6 @@ env:
 #    init: /usr/lib/systemd/systemd
     init: /bin/bash
     run_opts: "-t --privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: centos6
-    init: /sbin/init
-    run_opts: ""
   - distro: ubuntu1404
     init: /sbin/init
     run_opts: ""
