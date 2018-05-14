@@ -33,22 +33,12 @@
     include: devel.yml
     when: im_version == "devel"
 
-  # Use system package python-requests instead of pip version
-  - pip: state=absent name=requests,urllib3 executable=pip
-    name: remove pip requests
-    when: (ansible_os_family == "Debian") or (ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7)
+  # Install correct version of requests to avoid SSL errors
+  - pip: name=requests executable=pip version=2.11.1
+    name: Instal requests version 2.11.1
 
-  - apt: name=python-requests state=latest
-    name: Install python-requests
-    when: ansible_os_family == "Debian"
-
-  - yum: name=python-requests,python-urllib3 state=latest
-    name: Install python-requests
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
-
-  - name: Assure to reinstall python-requests
-    command: yum reinstall -y python-requests python-urllib3
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
+  - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns executable=pip
+    name: Instal Azure libs
 
   - name: Enable IM REST API
     ini_file: dest=/etc/im/im.cfg section=im option=ACTIVATE_REST value=True
