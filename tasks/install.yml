@@ -37,7 +37,7 @@
   - pip: name=requests executable=pip version=2.11.1
     name: Instal requests version 2.11.1
 
-  - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns executable=pip
+  - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns,azure-storage executable=pip
     name: Instal Azure libs
 
   - name: Enable IM REST API
