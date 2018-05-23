@@ -12,7 +12,6 @@
     name: im
     image: "grycap/im:{{im_version}}"
     state: started
-    restart: yes
     ports:
     - "8800:8800"
     - "8899:8899"
