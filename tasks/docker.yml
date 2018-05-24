@@ -8,14 +8,14 @@
   pip: name=docker-py
 
 - name: Launch im container
-  docker:
+  docker_container:
     name: im
     image: "grycap/im:{{im_version}}"
     state: started
     ports:
     - "8800:8800"
     - "8899:8899"
-    expose:
+    exposed_ports:
     - 8899
     - 8800
     volumes:
