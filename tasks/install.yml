@@ -36,12 +36,12 @@
     include: devel.yml
     when: im_version == "devel"
 
+  - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns,azure-storage executable=pip
+    name: Instal Azure libs
+
   # Install correct version of requests to avoid SSL errors
   - pip: name=requests executable=pip version=2.11.1
     name: Instal requests version 2.11.1
-
-  - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns,azure-storage executable=pip
-    name: Instal Azure libs
 
   - name: Enable IM REST API
     ini_file: dest=/etc/im/im.cfg section=im option=ACTIVATE_REST value=True
