@@ -21,8 +21,8 @@
   - name: Install xmltodict
     pip: name=xmltodict state=latest executable=pip
 
-  - name: dowload my LibCloud from git
-    git: repo=https://github.com/micafer/libcloud.git dest=/opt/tmp/libcloud version=trunk
+  - name: dowload LibCloud from git
+    git: repo=https://github.com/apache/libcloud.git dest=/opt/tmp/libcloud version=trunk
 
   - name: Install my improved LibCloud until PR is accepted
     pip: name=/opt/tmp/libcloud
