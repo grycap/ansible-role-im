@@ -1,0 +1,6 @@
+- copy: src=im_importer.py dest=/var/tmp/im_importer.py
+
+- command: /var/tmp/im_importer.py {{ im_infrastructure_id }}
+  register: im_import
+  failed_when: im_import.rc == 1
+  changed_when: im_import.rc == 2

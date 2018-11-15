@@ -24,3 +24,6 @@
     - 8800
   when: ansible_os_family == "RedHat"
   ignore_errors: yes
+
+- include: import.yml
+  when: im_infrastructure_id != ""
