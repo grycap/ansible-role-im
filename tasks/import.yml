@@ -6,6 +6,7 @@
     line: "{{ item }}"
     create: yes
   with_items: "{{ im_auth_data.split('\\n') }}"
+  no_log: True
 
 - command: /var/tmp/im_importer.py {{ im_infrastructure_id }}
   register: im_import
