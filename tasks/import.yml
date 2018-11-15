@@ -1,4 +1,4 @@
-- copy: src=im_importer.py dest=/var/tmp/im_importer.py
+- copy: src=im_importer.py dest=/var/tmp/im_importer.py mode=755
 
 - command: /var/tmp/im_importer.py {{ im_infrastructure_id }}
   register: im_import
