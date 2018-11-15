@@ -1,5 +1,12 @@
 - copy: src=im_importer.py dest=/var/tmp/im_importer.py mode=755
 
+- name: Create auth file
+  lineinfile:
+    path: /usr/local/ec3/auth.dat
+    line: "{{ item }}"
+    create: yes
+  with_items: "{{ im_auth_data.split('\\n') }}"
+
 - command: /var/tmp/im_importer.py {{ im_infrastructure_id }}
   register: im_import
   failed_when: im_import.rc == 1

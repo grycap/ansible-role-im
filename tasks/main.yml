@@ -26,4 +26,4 @@
   ignore_errors: yes
 
 - include: import.yml
-  when: im_infrastructure_id != ""
+  when: im_infrastructure_id != "" and im_auth_data != ""

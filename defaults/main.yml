@@ -4,3 +4,5 @@ im_version: latest
 im_use_docker: False
 # Install IM importer
 im_infrastructure_id: ""
+# Auth data to import Infrastructure
+im_auth_data: ""
