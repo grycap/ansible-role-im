@@ -5,7 +5,7 @@
   file: path=/var/log/im state=directory
 
 - name: Install dependencies for docker management
-  pip: name=docker-py
+  pip: name=docker
 
 - name: Launch im container
   docker_container:
