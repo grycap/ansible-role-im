@@ -23,7 +23,7 @@
 
   # Install IM using pip
   - name: Pip install IM
-    pip: name=IM executable=pip
+    pip: name=IM executable=pip state=latest
     when: im_version == "latest"
 
   # Install IM using pip but specific version
@@ -61,4 +61,4 @@
     iptables: chain=INPUT jump=ACCEPT protocol=tcp destination_port=8899 action=insert
     ignore_errors: yes
 
-  when: not im_installed.stat.exists
+  when: im_force_reinstall or not im_installed.stat.exists
