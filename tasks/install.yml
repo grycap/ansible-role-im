@@ -25,13 +25,13 @@
   - name: Pip install IM
     pip: name=IM executable=pip state=latest
     when: im_version == "latest"
-    register: im_updated
+    register: im_last_updated
 
   # Install IM using pip but specific version
   - name: Pip install IM
     pip: name=IM version={{ im_version }} executable=pip
     when: im_version != "latest" and im_version != "devel"
-    register: im_updated
+    register: im_version_updated
 
   # Install IM getting devel branch from git
   - name: Install IM devel Version
@@ -53,7 +53,7 @@
 
   - name: Force restart IM service
     service: name=im state=restarted
-    when: im_force_reinstall and im_updated is changed
+    when: im_version_updated is changed or im_last_updated is changed
 
   - name: Start im service
     service: name=im state=started enabled=yes
