@@ -21,6 +21,9 @@
   - name: Install xmltodict
     pip: name=xmltodict state=latest executable=pip
 
+  - name: Install PyYAML 3.13
+    pip: name=PyYAML==3.13 executable=pip
+
   # Install IM using pip
   - name: Pip install IM
     pip: name=IM executable=pip
