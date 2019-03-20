@@ -21,9 +21,6 @@
   - name: Install xmltodict
     pip: name=xmltodict state=latest executable=pip
 
-  - name: Install PyYAML 3.13
-    pip: name=PyYAML==3.13 executable=pip
-
   # Install IM using pip
   - name: Pip install IM
     pip: name=IM executable=pip state=latest
@@ -40,6 +37,9 @@
   - name: Install IM devel Version
     include: devel.yml
     when: im_version == "devel"
+
+  - name: Install PyYAML 3.13
+    pip: name=PyYAML==3.13 executable=pip
 
   - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns,azure-storage executable=pip
     name: Instal Azure libs
