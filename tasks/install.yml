@@ -41,6 +41,10 @@
   - name: Install PyYAML 3.13
     pip: name=PyYAML==3.13 executable=pip
 
+  - name: Install PyCrypto
+    pip: name=pycrypto executable=pip
+    ignore_errors: yes
+
   - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns,azure-storage executable=pip
     name: Instal Azure libs
 
