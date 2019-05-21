@@ -38,9 +38,6 @@
     include: devel.yml
     when: im_version == "devel"
 
-  - name: Install PyYAML 3.13
-    pip: name=PyYAML==3.13 executable=pip
-
   - name: Install PyCrypto
     pip: name=pycrypto executable=pip
     ignore_errors: yes
