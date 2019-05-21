@@ -29,6 +29,12 @@
     name: Instal Azure libs
 
   # Install IM using pip
+  - name: Pip install IM
+    pip: name=IM executable=pip
+    when: im_version == ''
+    register: im_last_updated
+
+  # Install IM using pip latest version
   - name: Pip install IM latest
     pip: name=IM executable=pip state=latest
     when: im_version == "latest"
