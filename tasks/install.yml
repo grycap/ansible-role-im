@@ -33,6 +33,14 @@
     pip: name=IM executable=pip
     when: im_version == "latest"
 
+  # Install my libcloud version until PRs are merged
+  - name: Install micafer libcloud
+    pip: name=git+http://github.com/micafer/libcloud@im
+
+  - name: Pip install libcloud
+    pip: name=IM version={{ im_version }} executable=pip
+    when: im_version != "latest" and im_version != "devel"
+
   # Install IM using pip but specific version
   - name: Pip install IM
     pip: name=IM version={{ im_version }} executable=pip
