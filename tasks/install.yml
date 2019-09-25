@@ -28,8 +28,8 @@
   - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns,azure-storage executable=pip
     name: Instal Azure libs
 
-  - name: Install micafer libcloud
-    pip: name=git+http://github.com/micafer/libcloud@im
+#  - name: Install micafer libcloud
+#    pip: name=git+http://github.com/micafer/libcloud@im
 
   # Install IM using pip
   - name: Pip install IM
