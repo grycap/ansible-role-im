@@ -1,10 +1,10 @@
-- name: Debian/Ubuntu install requisites with apt
-  apt: name=python-pip,python-setuptools,sshpass,openssh-client,unzip install_recommends=no
+- name: Install IM dependencies for Debian
+  apt: name=gcc,git,python-dev,libffi-dev,libssl-dev,python-pip,libsqlite3-dev,python-enum34 update_cache=yes cache_valid_time=3600
 
-- block:
-  - name: Ubuntu 14 extra packages needed
-    apt: name=gcc,python-dev,libffi-dev,libssl-dev install_recommends=no
+- name: Install ipaddress in Ubuntu 14
+  pip: name=ipaddress
+  when: ansible_distribution_major_version == "14"
 
-  - name: Install ipaddress in Ubuntu 14
-    pip: name=ipaddress
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int <= 14
+- name: Install last version of setuptools with Pip
+  pip: name=setuptools extra_args="-I" state=latest
+  when: ansible_distribution_major_version == "14"
