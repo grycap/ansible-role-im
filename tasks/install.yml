@@ -18,6 +18,9 @@
   - name: Install xmltodict
     pip: name=xmltodict state=latest executable=pip
 
+  - name: Install more-itertools
+    pip: name=more-itertools version=8.0.2 executable=pip
+
   - name: Install PyCrypto
     pip: name=pycrypto executable=pip
     ignore_errors: yes
