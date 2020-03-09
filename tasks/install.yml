@@ -15,9 +15,6 @@
   - name: Upgrade setuptools
     pip: name=setuptools version=39.2 executable=pip
 
-  - name: Install backports.ssl_match_hostname
-    pip: name=backports.ssl_match_hostname state=latest executable=pip
-
   - name: Install xmltodict
     pip: name=xmltodict state=latest executable=pip
 
