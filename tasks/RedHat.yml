@@ -2,4 +2,12 @@
   yum: name=epel-release
 
 - name: Install IM dependencies for CentOS
-  yum: name=gcc,git,python-devel,libffi-devel,openssl-devel,python-pip,sqlite-devel,python-enum34,python-sqlite3dbm update_cache=yes
+  yum: name=gcc,git,libffi-devel,openssl-devel,sqlite-devel, update_cache=yes
+
+- name: Install IM dependencies for CentOS 7,6
+  yum: name=python-devel,python-pip,python-enum34,python-sqlite3dbm
+  when: ansible_distribution_major_version|int < 8
+
+- name: Install IM dependencies for CentOS 8
+  yum: name=python3-devel,python3-pip,python3-enum34
+  when: ansible_distribution_major_version|int >= 8
