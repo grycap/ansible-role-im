@@ -74,7 +74,7 @@
     # This fixes a problem with the IM service in Centos 7
   - name: Kill and restart im service (Centos 7 only)
     shell: pgrep im | xargs kill && service im restart
-    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int >= 7
+    when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 7
 
   - name: Open port 8899
     iptables: chain=INPUT jump=ACCEPT protocol=tcp destination_port=8899 action=insert
