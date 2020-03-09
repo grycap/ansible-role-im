@@ -7,7 +7,7 @@
 
 - name: Yum install requisites RH 8 / Fedora 28+
   command: yum install -y python2-pip python2-setuptools sshpass openssh-clients
-  when: (ansible_distribution != "Fedora" and and ansible_distribution_major_version|int >= 8) or (ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 28)
+  when: (ansible_distribution != "Fedora" and ansible_distribution_major_version|int >= 8) or (ansible_distribution == "Fedora" and ansible_distribution_major_version|int >= 28)
 
 - name: Yum install extra requisites RH 6
   yum: name=gcc,libffi-devel,openssl-devel,python-devel update_cache=yes
