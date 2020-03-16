@@ -61,6 +61,9 @@
     ini_file: dest=/etc/im/im.cfg section=im option=MAX_SIMULTANEOUS_LAUNCHES value=1
     when: ansible_os_family == "RedHat" and ansible_distribution_major_version|int == 6
 
+  - name: Set OIDC issuers
+    ini_file: dest=/etc/im/im.cfg section=im option=OIDC_ISSUERS value={{ im_oidc_issuers }}
+
   - name: Set im script access rights
     file: path=/etc/init.d/im mode=0755
 
