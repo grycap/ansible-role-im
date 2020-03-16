@@ -4,3 +4,6 @@ im_version: ''
 im_use_docker: False
 # Force the IM to be reinstalled
 im_force_reinstall: false
+# Comma separated list of supported OIDC issuers
+# EGI Checking is set by default
+im_oidc_issuers: https://aai.egi.eu/oidc/
