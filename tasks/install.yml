@@ -25,7 +25,7 @@
     pip: name=pycrypto executable=pip2
     ignore_errors: yes
 
-  - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns,azure-storage executable=pip2
+  - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns executable=pip2
     name: Instal Azure libs
 
 #  - name: Install micafer libcloud
