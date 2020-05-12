@@ -51,7 +51,7 @@
     include: devel.yml
     when: im_version == "devel"
 
-  - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns,azure-storage executable=pip
+  - pip: name=msrest,msrestazure,azure-common,azure-mgmt-storage,azure-mgmt-compute,azure-mgmt-network,azure-mgmt-resource,azure-mgmt-dns executable=pip
     name: Instal Azure libs
 
   - name: Enable IM REST API
