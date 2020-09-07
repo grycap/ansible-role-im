@@ -22,5 +22,8 @@
     - 8899
     - 8800
     volumes:
-    - "/etc/im/inf.dat:/etc/im/inf.dat"
+    - "/etc/im:/data"
     - "/var/log/im:/var/log/im"
+    env:
+      IM_DATA_DB: "/data/inf.dat"
+~                                    
