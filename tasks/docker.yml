@@ -26,4 +26,3 @@
     - "/var/log/im:/var/log/im"
     env:
       IM_DATA_DB: "/data/inf.dat"
-~                                    
