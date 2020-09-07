@@ -7,6 +7,9 @@
 - name: Install dependencies for docker management
   pip: name=docker
 
+- set_fact: im_version='latest'
+  when: im_version == ''
+
 - name: Launch im container
   docker_container:
     name: im
