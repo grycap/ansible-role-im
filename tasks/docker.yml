@@ -1,11 +1,33 @@
 - name: Create /etc/im dir
-  file: path=/etc/im state=directory
+  file:
+    path: /etc/im
+    state: directory
 
 - name: Create /var/log/im dir
-  file: path=/var/log/im state=directory
+  file:
+    path: /var/log/im
+    state: directory
 
 - name: Install dependencies for docker management
-  pip: name=docker
+  pip:
+    name: docker
+
+- name: Set IM version
+  set_fact:
+    im_version: 'latest'
+  when: im_version == ''
+
+- name: Download IM cfg file
+  get_url:
+    url: https://raw.githubusercontent.com/grycap/im/master/etc/im.cfg
+    dest: /etc/im/im.cfg
+
+- name: Set OIDC issuers
+  ini_file:
+    dest: /etc/im/im.cfg
+    section: im
+    option: OIDC_ISSUERS
+    value: "{{ im_oidc_issuers }}"
 
 - name: Launch im container
   docker_container:
@@ -19,5 +41,8 @@
     - 8899
     - 8800
     volumes:
-    - "/etc/im:/etc/im"
+    - "/etc/im:/data"
     - "/var/log/im:/var/log/im"
+    - "/etc/im/im.cfg:/etc/im/im.cfg"
+    env:
+      IM_DATA_DB: "/data/inf.dat"
