@@ -18,4 +18,3 @@ galaxy_info:
 
 dependencies:
   - role: grycap.docker
-    when: im_use_docker

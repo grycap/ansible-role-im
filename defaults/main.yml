@@ -1,9 +1,7 @@
 # IM version to install: '', latest, devel, 1.4.8, ...
 im_version: ''
-# Use docker to launch IM
-im_use_docker: true
-# Force the IM to be reinstalled
-im_force_reinstall: false
 # Comma separated list of supported OIDC issuers
 # EGI Checking is set by default
 im_oidc_issuers: https://aai.egi.eu/oidc/
+# Option to set in the IM cfg file. Dictionary.
+im_etc_options: {}

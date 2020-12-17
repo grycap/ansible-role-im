@@ -7,12 +7,3 @@
     - name: "Include grycap.im"
       include_role:
         name: "ansible-role-im"
-      when: inventory_hostname == 'docker'
-
-    - name: "Include grycap.im"
-      include_role:
-        name: "ansible-role-im"
-      vars:
-        im_use_docker: false
-        im_version: devel
-      when: inventory_hostname == 'devel'
