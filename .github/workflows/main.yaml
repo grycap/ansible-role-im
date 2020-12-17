@@ -12,14 +12,14 @@ on:
 jobs:
   test:
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: checkout
         uses: actions/checkout@v2
 
       - name: Install python
-        run: sudo apt update && sudo apt install -y python3 python3-pip python3-setuptools
+        run: sudo apt update && sudo apt install -y python3 python3-pip python3-setuptools curl
 
       - name: Install Ansible
         run: sudo pip3 install ansible
@@ -35,3 +35,6 @@ jobs:
 
       - name: Basic role check
         run: sudo ansible-playbook tests/test.yml -i tests/inventory
+
+      - name: Test IM service
+        run: curl http://localhost:8800/version
