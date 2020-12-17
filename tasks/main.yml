@@ -1,8 +1,57 @@
-- include: docker.yml
-  when: im_use_docker
+- name: Create /etc/im dir
+  file:
+    path: /etc/im
+    state: directory
 
-- include: install.yml
-  when: not im_use_docker
+- name: Create /var/log/im dir
+  file:
+    path: /var/log/im
+    state: directory
+
+- name: Set IM version
+  set_fact:
+    im_version: 'latest'
+  when: im_version == ''
+
+# workaround to fix ansible issue: https://github.com/ansible/ansible/issues/64016
+- stat:
+    path: /etc/im/im.cfg
+  register: im_cfg
+
+- name: Download IM cfg file
+  get_url:
+    url: https://raw.githubusercontent.com/grycap/im/master/etc/im.cfg
+    dest: /etc/im/im.cfg
+  when: not im_cfg.stat.exists
+
+- set_fact:
+    im_etc_options: "{{ im_etc_options | combine( {'OIDC_ISSUERS': im_oidc_issuers} ) }}"
+
+- name: Set IM cfg options
+  ini_file:
+    dest: /etc/im/im.cfg
+    section: im
+    option: "{{ item.key }}"
+    value: "{{ item.value }}"
+  with_dict: "{{ im_etc_options }}"
+
+- name: Launch im container
+  docker_container:
+    name: im
+    image: "grycap/im:{{im_version}}"
+    state: started
+    ports:
+    - "8800:8800"
+    - "8899:8899"
+    exposed_ports:
+    - "8899"
+    - "8800"
+    volumes:
+    - "/etc/im:/data"
+    - "/var/log/im:/var/log/im"
+    - "/etc/im/im.cfg:/etc/im/im.cfg"
+    env:
+      IM_DATA_DB: "/data/inf.dat"
 
 - iptables:
     chain: INPUT
@@ -10,17 +59,33 @@
     destination_port: "{{item}}"
     jump: ACCEPT
   with_items:
-    - 8899
-    - 8800
+    - "8899"
+    - "8800"
   ignore_errors: yes
 
-- firewalld:
-    port: "{{item}}/tcp"
-    permanent: true
-    state: enabled
-    immediate: true
-  with_items:
-    - 8899
-    - 8800
-  when: ansible_os_family == "RedHat"
-  ignore_errors: yes
+- stat:
+    path: /usr/sbin/firewalld
+  register: firewalld
+
+- block:
+
+  - package:
+      name: python-firewall
+    when: ansible_os_family == "RedHat" and ansible_python.version.major < 3
+
+  - package:
+      name: python3-firewall
+    when: ansible_os_family == "RedHat" and ansible_python.version.major > 2
+
+  - firewalld:
+      port: "{{item}}/tcp"
+      permanent: true
+      state: enabled
+      immediate: true
+    with_items:
+      - 8899
+      - 8800
+    when: ansible_os_family == "RedHat"
+    ignore_errors: yes
+
+  when: firewalld.stat.exists

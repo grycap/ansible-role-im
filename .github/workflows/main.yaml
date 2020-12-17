@@ -1,0 +1,40 @@
+---
+name: CI
+
+on:
+
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Install python
+        run: sudo apt update && sudo apt install -y python3 python3-pip python3-setuptools curl
+
+      - name: Install Ansible
+        run: sudo pip3 install ansible
+
+      - name: Create ansible.cfg with correct roles_path
+        run: sudo printf '[defaults]\nroles_path=../' > ansible.cfg
+  
+      - name: Install grycap.docker
+        run: sudo ansible-galaxy install grycap.docker
+
+      - name: Basic role syntax check
+        run: sudo ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+
+      - name: Basic role check
+        run: sudo ansible-playbook tests/test.yml -i tests/inventory
+
+      - name: Test IM service
+        run: sleep 5 && curl http://localhost:8800/version

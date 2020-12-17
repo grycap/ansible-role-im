@@ -11,11 +11,11 @@ galaxy_info:
     - 7
   - name: Ubuntu
     versions:
-    - trusty
     - xenial
+    - bionic
+    - focal
   galaxy_tags:
     - im
 
 dependencies:
   - role: grycap.docker
-    when: im_use_docker
