@@ -59,8 +59,8 @@
     destination_port: "{{item}}"
     jump: ACCEPT
   with_items:
-    - 8899
-    - 8800
+    - "8899"
+    - "8800"
   ignore_errors: yes
 
 - stat:

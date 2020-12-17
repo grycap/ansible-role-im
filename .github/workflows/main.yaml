@@ -37,4 +37,4 @@ jobs:
         run: sudo ansible-playbook tests/test.yml -i tests/inventory
 
       - name: Test IM service
-        run: curl http://localhost:8800/version
+        run: sleep 5 && curl http://localhost:8800/version
