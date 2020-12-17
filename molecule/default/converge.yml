@@ -1,9 +1,0 @@
----
-- name: Converge
-  hosts: all
-  become: true
-
-  tasks:
-    - name: "Include grycap.im"
-      include_role:
-        name: "ansible-role-im"
