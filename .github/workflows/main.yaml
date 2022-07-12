@@ -63,7 +63,7 @@ jobs:
         run: sudo ansible-playbook tests/test.yml -i tests/inventory --syntax-check
 
       - name: Basic role check
-        run: sudo ansible-playbook tests/test.yml -i tests/inventory -e im_containerd=true
+        run: sudo ansible-playbook tests/test.yml -i tests/inventory -e im_container_runtine=containerd
 
       - name: Test IM service
         run: sleep 5 && curl http://localhost:8800/version

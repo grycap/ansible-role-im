@@ -5,5 +5,5 @@ im_version: ''
 im_oidc_issuers: https://aai.egi.eu/oidc/
 # Option to set in the IM cfg file. Dictionary.
 im_etc_options: {}
-# Option to use containerd to launch the IM service instead of Docker
-im_containerd: false
+# Select the runtime to launch the IM service: docker or containerd
+im_container_runtine: 'docker'
