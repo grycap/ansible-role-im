@@ -52,6 +52,18 @@
     - "/etc/im/im.cfg:/etc/im/im.cfg"
     env:
       IM_DATA_DB: "/data/inf.dat"
+  when: im_container_runtine == 'docker'
+
+- name: test if im containerd exists
+  command: nerdctl inspect im
+  when: im_container_runtine == 'containerd'
+  changed_when: false
+  ignore_errors: true
+  register: im_container
+
+- name: Launch im containerd
+  command: nerdctl run -d -p 8800:8800 -p 8899:8899 --name im -v /etc/im:/data -v /var/log/im:/var/log/im -v /etc/im/im.cfg:/etc/im/im.cfg grycap/im:{{im_version}}
+  when: im_container_runtine == 'containerd' and im_container.rc != 0
 
 - iptables:
     chain: INPUT

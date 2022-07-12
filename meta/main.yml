@@ -19,3 +19,5 @@ galaxy_info:
 
 dependencies:
   - role: grycap.docker
+    docker_containerd_only: "{{ (im_container_runtine == 'containerd') | bool }}"
+    docker_containerd_install_cni: "{{ (im_container_runtine == 'containerd') | bool }}"
