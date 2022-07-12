@@ -62,7 +62,7 @@
   register: im_container
 
 - name: Launch im containerd
-  command: nerdctl run -d -p 8800:8800 -p 8899:8899 --name im --v /etc/im:/data -v /var/log/im:/var/log/im -v /etc/im/im.cfg:/etc/im/im.cfg grycap/im:{{im_version}}
+  command: nerdctl run -d -p 8800:8800 -p 8899:8899 --name im -v /etc/im:/data -v /var/log/im:/var/log/im -v /etc/im/im.cfg:/etc/im/im.cfg grycap/im:{{im_version}}
   when: im_container_runtine == 'containerd' and im_container.rc != 0
 
 - iptables:
