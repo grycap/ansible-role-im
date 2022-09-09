@@ -2,7 +2,7 @@
 im_version: ''
 # Comma separated list of supported OIDC issuers
 # EGI Checking is set by default
-im_oidc_issuers: https://aai.egi.eu/oidc/
+im_oidc_issuers: https://aai.egi.eu/auth/realms/egi
 # Option to set in the IM cfg file. Dictionary.
 im_etc_options: {}
 # Select the runtime to launch the IM service: docker or containerd
